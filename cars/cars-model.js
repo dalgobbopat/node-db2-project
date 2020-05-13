@@ -11,7 +11,7 @@ function get() {
 }
 
 function getById(id) {
-    return db('cars').where({ id: Number(id) }),first();
+    return db('cars').where({ id: Number(id) });
 }
 
 function insert(cars) {
