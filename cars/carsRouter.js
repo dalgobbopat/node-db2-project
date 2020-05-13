@@ -20,39 +20,24 @@ router.get('/:id', (req,res) => {
         });
 });
 
-// router.post('/', (req,res) => {
-//     const { vin, make, model, mileage, transmission, title } = req.body;
-//     Cars.insert({ vin, make, model, mileage, transmission, title})
-//     .then(car => {
-//         if(car) {
-//             res.status(200).json(car);
-//         } else {
-//             res.status(404).end();
-//         }
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json({
-//             error:'Error inserting car'
-//         })
-//     })
-// })
-
 router.post('/', (req,res) => {
-    const carsData = req.body;
-    db('cars')
-    .insert(carsData)
-    .then(ids => {
-        db('cars')
-        .where({id: ids[0] })
-        .then(newCarEntry => {
-            res.status(200).json(newCarEntry)
-        });
+    const { vin, make, model, mileage, transmission, title } = req.body;
+    Cars.insert({ vin, make, model, mileage, transmission, title})
+    .then(car => {
+        if(car) {
+            res.status(200).json(car);
+        } else {
+            res.status(404).end();
+        }
     })
     .catch(err => {
         console.log(err);
-        res.status(500).json({error: 'failed to store car'})
+        res.status(500).json({
+            error:'Error inserting car'
+        })
     })
 })
+
+
 
 module.exports = router;
